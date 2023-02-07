@@ -3,4 +3,4 @@
 
 <p> This is application aim is to make sure that your tasks are written down all in one place so you don't forget anything important.</br> You can change the status of the task in the list to either complete, new and processing </p>
 
-<p> with this repo you will learn to use crud functionalities with ASP .Net Core MVC </p>
+<p> with this repo you will learn How to use crud functionalities with ASP .Net Core MVC </p>
