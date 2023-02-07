@@ -1,0 +1,51 @@
+﻿@model TaskManager.Models.ToDoItem
+
+@{
+    ViewData["Title"] = "CreateItem";
+}
+
+
+
+<div class="container-fluid">
+
+
+    <div class="container">
+
+        <div class="d-flex">
+
+          <h2> Add A Task</h2>
+
+
+          <div class="ms-auto">
+
+              <a asp-action="Index" asp-asp-controller="TaskManager" class="btn btn-danger">Back</a>
+          </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-10">
+                <form asp-action="CreateItem" asp-controller="TaskManager">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+               
+                    <div class="form-group py-2">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group py-2">
+                        <label asp-for="status" class="control-label"></label>
+                         <select asp-for="status"  class="form-control" readonly >
+                         <option value="new"> New</option>
+                         </select> 
+
+                        <span asp-validation-for="status" class="text-danger"></span>
+                    </div>
+                    <div class="form-group py-3">
+                        <input type="submit" value="Add Task" class="btn btn-task" />
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+
+</div>

@@ -1,0 +1,121 @@
+﻿@model PaginatedList<TaskManager.Models.ToDoItem>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container-fluid py-3">
+
+    <div class="container">
+
+        <div class="d-flex pb-2">
+
+            <div class="px-3">
+                <h4 style="font-weight:700;"> Add A Task </h4>
+            </div>
+            <div class="ms-auto">
+                <a class="btn btn-task" asp-action="CreateItem" asp-controller="TaskManager"> Add Task</a>
+            </div>
+
+        </div>
+       
+
+        <div class="container">
+        <form asp-action="Index" method="get">
+            <div class="col-md-5 py-2">
+                <div class="form-group">
+                        <label for="SearchString"> Search: <span class="text-black-50">  Name or Status  </span></label>
+                    <input type="text" class="form-control mt-2" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                   
+                    <div class="form-group py-3">
+
+                        <input type="submit" value="Search" class="btn btn-task" />
+
+                    </div>
+
+                     <div class="form-group ms-auto pb-2">
+
+                            <a asp-action="Index" asp-controller="TaskManager" class="text-decoration-none" style="color:#fb8500">Back To List</a>
+                     </div>
+                </div>
+                
+           </div>
+        </form>
+        </div>
+        <div class="container py-2">
+
+            <table class="table ">
+                <thead>
+                    <tr style="background-color:#fca311;">
+
+                        <th scope="col"> 
+
+                            <a asp-controller="TaskManager" asp-action="Index" asp-route-sortOrder="@ViewData["NameSort"]" asp-route-currentFilter="@ViewData["CurrentFilter"]" class="text-decoration-none text-black"> Task     <i class="bi bi-sort-alpha-up"></i></a>
+                        </th> 
+                        <th scope="col"> Status</th>
+                        <th scope="col"> Created On</th>
+                        <th scope="col"> Updated On</th>
+                        <th scope="col"> Action</th>
+
+                   
+                    </tr>
+                </thead>
+               @foreach(var item in Model)
+                {
+                  <tbody>
+                      <tr>
+
+                            <td > @item.Name</td>
+                            <td class="text-capitalize">
+
+                                @if (item.status == "new")
+                                {
+                                    <span style="color:#fb8500; font-weight:800;">  @item.status </span>
+                                }
+                                else if (item.status == "complete")
+                                {
+                                    <span style="color:#023047; font-weight:800;">  @item.status </span>
+                                }
+                                else if(item.status== "processing")
+                                {
+                                    <span style="color:#2a9d8f; font-weight:800;">  @item.status </span>
+                                }
+
+                            
+                            </td>
+                            <td > @item.createdOn</td>
+                            <td> @item.updatedOn</td>
+                            <td>
+                                <a asp-action="EditItem" asp-controller="TaskManager" asp-route-id="@item.ID" class="text-decoration-none">Edit</a> |
+                                <a asp-action="DeleteItem" asp-controller="TaskManager" asp-route-id="@item.ID"class="text-decoration-none"> Delete</a>
+
+                            </td>
+                      </tr>
+                
+                  </tbody>
+                }
+             </table>
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex - 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @prevDisabled">
+                Previous
+            </a>
+            <a asp-action="Index"
+               asp-route-sortOrder="@ViewData["CurrentSort"]"
+               asp-route-pageNumber="@(Model.PageIndex + 1)"
+               asp-route-currentFilter="@ViewData["CurrentFilter"]"
+               class="btn btn-default @nextDisabled">
+                Next
+            </a>
+
+        </div>
+    </div>
+</div>
+
